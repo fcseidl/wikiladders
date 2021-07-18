@@ -2,7 +2,7 @@ package wikiladders;
 
 import java.io.IOException;
 
-//import wikiladders.WikiNode;
+import wikiladders.WikiNode;
 
 /**
  * Get the HTML for Simone Weil's (the only great spirit of our time) Wikipedia
@@ -13,9 +13,9 @@ public class SimoneScrape {
     public static void scrape() {
 
         try {
-        	WikiNode node = new WikiNode("Simone_Weil");
-        	for (String title : node.getChildren()) {
-				System.out.println(title);
+        	WikiNode node = new WikiNode("https://en.wikipedia.org/wiki/Simone_Weil");
+        	for (WikiNode child : node.getChildren()) {
+        		System.out.println(child.pageName + " -- " + child.displayTxt);
 			} // for
 
         } catch (IOException e) {
