@@ -17,10 +17,17 @@ import java.util.ArrayList;
 public class IterativeDeepening {
 
 	private static final int DEFAULT_MAX_DEPTH_LIMIT = 5;
-	
+
+	// lots of spaces to overwrite previous path after carriage return in console
+	private static final String CONSOLE_BUFFER = "                                                                                                            ";
+
+	// how long to allow named in console before using ellipsis
+	private static final int CONSOLE_ELLIPSIS_THRES = 20;
+
 	private final WikiNode source, dest;
 	
 	private int currentDepthLimit;
+	private String consolePath;
 	
 	/**
 	 * Inorder search up to currentDepthLimit for path to destination node.
@@ -30,11 +37,26 @@ public class IterativeDeepening {
 	 * or null if one can't be found.
 	 */
 	private WikiNode depthFirstSearch(WikiNode node, int depth) throws IOException {
-		//System.out.println("node " + node.pageName + " at depth " + depth);
-		//System.out.println(dest.pageName);
+		/* TODO: do you want this?// display current path in console
+		*/
+		consolePath = "";
+		String displayTxt;
+		for (WikiNode ancestor = node; ancestor.parent != null; ancestor = ancestor.parent) {
+			// loop over non-root ancestry
+			if (ancestor.displayTxt.length() > CONSOLE_ELLIPSIS_THRES) {
+				displayTxt = ancestor.displayTxt.substring(0, CONSOLE_ELLIPSIS_THRES - 3) + "...";
+			} else {
+				displayTxt = ancestor.displayTxt;
+			}
+			consolePath = " -> " + displayTxt + consolePath;
+		} // for
+		System.out.print(consolePath + CONSOLE_BUFFER + "\r");
 		
 		// base cases
-		if (node.isSamePageAs(dest)) { return node; }
+		if (node.isSamePageAs(dest)) { 
+			System.out.println(consolePath);
+			return node; 
+		} // if done
 		if (depth == currentDepthLimit) { return null; }
 		
 		// recursive case
@@ -69,8 +91,7 @@ public class IterativeDeepening {
 	 */
 	public ArrayList<String> search() throws IllegalStateException, IOException {
 		while (currentDepthLimit <= maxDepthLimit) {
-			System.out.println("DFS with depth limit " + currentDepthLimit);
-			
+			System.out.println("Searching, depth limit " + currentDepthLimit);
 			WikiNode end = depthFirstSearch(source, 0);
 			if (end != null) {
 				ArrayList<String> result = new ArrayList<String>();
@@ -84,8 +105,6 @@ public class IterativeDeepening {
 		
 		// we've passed maxDepthLimit
 		throw new IllegalStateException("IDS max depth of " + maxDepthLimit + " exceeded.");
-	} // search
-	
-	
+	} // search()
 	
 } // IterativeDeepening

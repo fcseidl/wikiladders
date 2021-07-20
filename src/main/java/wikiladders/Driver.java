@@ -3,6 +3,7 @@ package wikiladders;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 /**
  * Short driver program for wikiladders package.
  * 
@@ -19,9 +20,8 @@ public class Driver {
 		IterativeDeepening ids;
 		ArrayList<String> path;
 		
-		source = new WikiNode("https://en.wikipedia.org/wiki/Gelato");
-		//dest = new WikiNode("https://en.wikipedia.org/wiki/Albert_Camus");
-		dest = new WikiNode("https://en.wikipedia.org/wiki/Martin_Luther_King_Jr.");
+		source = new WikiNode("https://en.wikipedia.org/wiki/Jupiter");
+		dest = new WikiNode("https://en.wikipedia.org/wiki/GitHub");
 		
 		ids = new IterativeDeepening(source, dest);
 		

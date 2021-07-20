@@ -1,9 +1,11 @@
 package wikiladders;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.lang.NullPointerException;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -67,14 +69,17 @@ public class WikiNode {
             		nextPageName = wikiPageName(nextLink);
             		nextDisplayTxt = nextLink.text();
             		
-            		// prevent backtracking
             		if (nextPageName != null) {
+            			// prevent backtracking
 	            		for (WikiNode ancestor = node; ancestor != null; ancestor = ancestor.parent) {
 	            			if (nextPageName.equals(ancestor.pageName)) { 
 	            				nextPageName = null; 
 	            				break;
 	            			} // if
 	            		} // for
+	            		
+	            		// prevent invisible links
+	            		if (nextDisplayTxt.compareTo("") == 0) { nextPageName = null; }
             		} // if not null
             	} // advanceLink()
             	
@@ -146,11 +151,19 @@ public class WikiNode {
     } // ctor
 
     /**
-     * @return an iterable containing the article titles of children of this node.
+     * Result of this method is an iterable containing the children of this node.
+     * If an HttpsStatusException occurs trying to access the node's page, an 
+     * empty ArrayList is returned.
+     * 
+     * @return Iterable<WikiNode>
      * @throws IOException 
      */
-    public NodeChildren getChildren() throws IOException {
-        return new NodeChildren(this);
+    public Iterable<WikiNode> getChildren() throws IOException {
+    	try {
+    		return new NodeChildren(this);
+    	} catch(HttpStatusException ex) {
+    		return new ArrayList<WikiNode>();
+    	} // try-catch
     } // getChildren()
     
     /**
