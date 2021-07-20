@@ -70,9 +70,12 @@ public class WikiNode {
             		// prevent backtracking
             		if (nextPageName != null) {
 	            		for (WikiNode ancestor = node; ancestor != null; ancestor = ancestor.parent) {
-	            			if (nextPageName.equals(ancestor.pageName)) { nextPageName = null; }
+	            			if (nextPageName.equals(ancestor.pageName)) { 
+	            				nextPageName = null; 
+	            				break;
+	            			} // if
 	            		} // for
-            		} // if
+            		} // if not null
             	} // advanceLink()
             	
             	/**

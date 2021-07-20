@@ -19,9 +19,9 @@ public class Driver {
 		IterativeDeepening ids;
 		ArrayList<String> path;
 		
-		source = new WikiNode("https://en.wikipedia.org/wiki/Simone_Weil");
+		source = new WikiNode("https://en.wikipedia.org/wiki/Gelato");
 		//dest = new WikiNode("https://en.wikipedia.org/wiki/Albert_Camus");
-		dest = new WikiNode("https://en.wikipedia.org/wiki/R%C3%A9volte_dans_les_Asturies");
+		dest = new WikiNode("https://en.wikipedia.org/wiki/Martin_Luther_King_Jr.");
 		
 		ids = new IterativeDeepening(source, dest);
 		
