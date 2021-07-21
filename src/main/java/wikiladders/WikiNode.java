@@ -20,6 +20,9 @@ public class WikiNode {
     private static final String SITE_PREFIX = "https://en.wikipedia.org";
     private static final String WIKI_PREFIX = "/wiki/";
     
+    /** Keeps track of how many pages we visit. */
+    private static int totalNodesExpanded = 0;
+
     /**
      * 
      * @param link a traversable internal wikipedia link
@@ -48,6 +51,7 @@ public class WikiNode {
            Document doc = Jsoup.connect(SITE_PREFIX + WIKI_PREFIX + node.pageName).get();
            links = doc.select("a[href]");
            this.node = node;
+           ++totalNodesExpanded;
         } // ctor
 
         /**
@@ -119,7 +123,6 @@ public class WikiNode {
     	this.displayTxt = displayTxt;
     	this.parent = parent;
     } // child ctor
-    
 
     /** suffix identifying this page in url */
     public final String pageName;
@@ -134,6 +137,16 @@ public class WikiNode {
      */
     public final WikiNode parent;
     
+    /**
+     * @return number pages visited since start of program or since last call to resetTotalNodesExpanded()
+     */
+    public static int getTotalNodesExpanded() { return totalNodesExpanded; }
+
+    /**
+     * Count of pages visited returns to 0.
+     */
+    public static void resetTotalNodesExpanded() { totalNodesExpanded = 0; }
+
     /**
      * Create a WikiNode with no parent from a web URL string.
      * @param url

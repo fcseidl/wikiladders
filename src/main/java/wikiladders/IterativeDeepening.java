@@ -37,8 +37,6 @@ public class IterativeDeepening {
 	 * or null if one can't be found.
 	 */
 	private WikiNode depthFirstSearch(WikiNode node, int depth) throws IOException {
-		/* TODO: do you want this?// display current path in console
-		*/
 		consolePath = "";
 		String displayTxt;
 		for (WikiNode ancestor = node; ancestor.parent != null; ancestor = ancestor.parent) {
@@ -84,14 +82,13 @@ public class IterativeDeepening {
 	} // maxDepthLimit ctor
 	
 	/**
-	 * 
 	 * @return ArrayList<String> with the display text of each link to be clicked 
-	 * along the shortest path between the two pages.
+	 * along the shortest path between the source and dest pages.
 	 * @throws IllegalStateException if maxDepthLimit is exceeded.
 	 */
 	public ArrayList<String> search() throws IllegalStateException, IOException {
 		while (currentDepthLimit <= maxDepthLimit) {
-			System.out.println("Searching, depth limit " + currentDepthLimit);
+			System.out.println("Searching, depth limit " + currentDepthLimit + CONSOLE_BUFFER);
 			WikiNode end = depthFirstSearch(source, 0);
 			if (end != null) {
 				ArrayList<String> result = new ArrayList<String>();

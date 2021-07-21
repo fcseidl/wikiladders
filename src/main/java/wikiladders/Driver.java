@@ -20,8 +20,8 @@ public class Driver {
 		IterativeDeepening ids;
 		ArrayList<String> path;
 		
-		source = new WikiNode("https://en.wikipedia.org/wiki/Jupiter");
-		dest = new WikiNode("https://en.wikipedia.org/wiki/GitHub");
+		source = new WikiNode("https://en.wikipedia.org/wiki/Kyoto");
+		dest = new WikiNode("https://en.wikipedia.org/wiki/Japan");
 		
 		ids = new IterativeDeepening(source, dest);
 		
@@ -30,6 +30,7 @@ public class Driver {
 			for (String displayTxt : path) {
 				System.out.println(displayTxt);
 			} // for
+			System.out.println("Used " + WikiNode.getTotalNodesExpanded() + " page connections.");
 		} catch (IllegalStateException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
